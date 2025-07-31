@@ -6,6 +6,7 @@ import com.rewardify.entity.Customer;
 import com.rewardify.entity.Order;
 import com.rewardify.entity.OrderItems;
 import com.rewardify.entity.Product;
+import com.rewardify.exceeption.ResourceNotExistException;
 import com.rewardify.repository.CustomerRepository;
 import com.rewardify.repository.OrderRepository;
 import com.rewardify.repository.ProductRepository;
@@ -13,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class GenericService {
@@ -35,7 +34,7 @@ public class GenericService {
     public Customer createCustomer(CreateCustomerRequest request) {
 
         customerRepository.findByEmail(request.getEmail()).ifPresent(customer -> {
-            throw new IllegalArgumentException("Customer with this email already exists");
+            throw new ResourceNotExistException("Customer with this email already exists");
         });
         Customer customer = new Customer();
         customer.setName(request.getName());
@@ -47,7 +46,7 @@ public class GenericService {
     public Customer getCustomer(Long customerId) {
         // Logic to get a customer by ID
         return customerRepository.findById(customerId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+            .orElseThrow(() -> new ResourceNotExistException("Customer not found"));
     }
 
     // Add methods for creating, retrieving, updating, and deleting products and orders
@@ -67,7 +66,7 @@ public class GenericService {
     //Update order status
     public Order updateOrderStatus(Long orderId, String status) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+                .orElseThrow(() -> new ResourceNotExistException("Order not found"));
         order.setCompleted("completed".equalsIgnoreCase(status));
         return orderRepository.save(order);
     }
