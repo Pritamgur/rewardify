@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
      }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> handleResourceNotFound(RuntimeException ex) {
+    public ResponseEntity<?> handleException(RuntimeException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -1,10 +1,7 @@
 package com.rewardify.service;
 
 import com.rewardify.dto.ReviewRequest;
-import com.rewardify.entity.Customer;
-import com.rewardify.entity.Order;
-import com.rewardify.entity.Product;
-import com.rewardify.entity.Review;
+import com.rewardify.entity.*;
 import com.rewardify.exceeption.ResourceNotExistException;
 import com.rewardify.repository.ReviewRepository;
 import com.rewardify.repository.CustomerRepository;
@@ -41,7 +38,8 @@ public class ReviewService {
                 .orElseThrow(() -> new ResourceNotExistException("Customer has no orders"));
 
         Optional<Product> product = orders.stream()
-                .flatMap(order -> order.getProducts().stream())
+                .flatMap(order -> order.getOrderItems().stream())
+                .map(OrderItems::getProduct)
                 .filter(e -> e.getId().equals(productId))
                 .findAny();
 

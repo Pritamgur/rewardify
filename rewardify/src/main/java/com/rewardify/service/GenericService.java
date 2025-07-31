@@ -4,6 +4,7 @@ import com.rewardify.dto.CreateCustomerRequest;
 import com.rewardify.dto.CreateOrderRequest;
 import com.rewardify.entity.Customer;
 import com.rewardify.entity.Order;
+import com.rewardify.entity.OrderItems;
 import com.rewardify.entity.Product;
 import com.rewardify.repository.CustomerRepository;
 import com.rewardify.repository.OrderRepository;
@@ -11,7 +12,10 @@ import com.rewardify.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GenericService {
@@ -51,7 +55,12 @@ public class GenericService {
     public Order createOrder(CreateOrderRequest request) {
         Order order = new Order();
         order.setCustomer(getCustomer(request.getCustomerId()));
-        order.setProducts(findAllProducts(request.getProducts()));
+        List<OrderItems> orderItems = getOrderItems(request);
+
+        for(OrderItems items : orderItems) {
+            items.setOrder(order); // Set the order for each order item
+        }
+        order.setOrderItems(orderItems);
         return orderRepository.save(order);
     }
 
@@ -61,6 +70,18 @@ public class GenericService {
                 .orElseThrow(() -> new IllegalArgumentException("Order not found"));
         order.setCompleted("completed".equalsIgnoreCase(status));
         return orderRepository.save(order);
+    }
+
+    public List<OrderItems> getOrderItems(CreateOrderRequest orderRequest) {
+        List<OrderItems> orderItems = new ArrayList<>();
+        List<Product> products = productRepository.findAllById(orderRequest.getOrderItems());
+        for (Product product : products) {
+            OrderItems orderItem = new OrderItems();
+            orderItem.setProduct(product);
+            orderItem.setQuantity(1); // Assuming quantity is 1 for simplicity
+            orderItems.add(orderItem);
+        }
+        return orderItems;
     }
 
     //add a product
