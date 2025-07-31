@@ -3,6 +3,7 @@ package com.rewardify.service;
 import com.rewardify.dto.ReviewRequest;
 import com.rewardify.entity.*;
 import com.rewardify.exceeption.ResourceNotExistException;
+import com.rewardify.repository.ProductRepository;
 import com.rewardify.repository.ReviewRepository;
 import com.rewardify.repository.CustomerRepository;
 import com.rewardify.repository.OrderRepository;
@@ -25,6 +26,9 @@ public class ReviewService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     public List<Review> getReviewsByProductId(Long productId) {
         return reviewRepository.findByProductId(productId)
                 .orElse(Collections.emptyList());
@@ -45,9 +49,13 @@ public class ReviewService {
 
         Review review = new Review();
         review.setCustomer(customer);
-        product.ifPresent(e -> {
+        product.ifPresentOrElse(e -> {
             review.setProduct(e);
             review.setVerified(true);
+        }, () -> {
+            productRepository.findById(productId)
+                    .ifPresent(review::setProduct);
+            review.setVerified(false);
         });
         review.setContent(reviewRequest.getReviewText());
         //To set the review as helpful or not
