@@ -41,6 +41,10 @@ public class ReviewService {
                 .orElse(Collections.emptyList());
     }
 
+    public Review getReviewById(Long reviewId) {
+        return reviewRepository.findById(reviewId).orElseThrow(() -> new ResourceNotExistException("Review Not found"));
+    }
+
     public void submitReview(Long customerId, Long productId, ReviewRequest reviewRequest) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotExistException("Customer not found"));
@@ -106,6 +110,7 @@ public class ReviewService {
         boolean isInFormative = isProductRelevant(tokens, product);
         System.out.println("Review informative: " + isInFormative);
         review.setInformative(isInFormative);
+
         reviewRepository.save(review);
     }
 
