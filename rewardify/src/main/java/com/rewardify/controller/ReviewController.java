@@ -3,6 +3,7 @@ package com.rewardify.controller;
 import com.rewardify.dto.ReviewRequest;
 import com.rewardify.dto.ReviewResponse;
 import com.rewardify.service.ReviewService;
+import com.rewardify.service.RewardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,9 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private RewardService rewardService;
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<?> getReviewsByProductId(@PathVariable Long productId) {
@@ -44,6 +48,16 @@ public class ReviewController {
     public ResponseEntity<String> evaluateReview(@PathVariable Long reviewId) {
         reviewService.evaluateReview(reviewId);
         return ResponseEntity.ok("Review evaluation updated");
+    }
+
+    @GetMapping("/{reviewId}")
+    public ResponseEntity<?> getReview(@PathVariable Long reviewId) {
+        return ResponseEntity.ok(reviewService.getReviewById(reviewId));
+    }
+
+    @PostMapping("/{reviewId}/reward")
+    public ResponseEntity<String> rewardForHelpfulReview(@PathVariable Long reviewId) {
+        return ResponseEntity.ok(rewardService.rewardForHelpfulReview(reviewId));
     }
 
 }
