@@ -284,16 +284,52 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"url": "{{baseURL}}/api/v1/reviews/3/helpful"
+				"url": "{{baseURL}}/api/v1/reviews/2/helpful"
 			},
 			"response": []
 		},
 		{
-			"name": "EvaluateReview",
+			"name": "EvaluateReviewValid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{baseURL}}/api/v1/reviews/2/evaluate"
+			},
+			"response": []
+		},
+		{
+			"name": "EvaluateReviewInvalid",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"url": "{{baseURL}}/api/v1/reviews/3/evaluate"
+			},
+			"response": []
+		},
+		{
+			"name": "GetReviewById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{baseURL}}/api/v1/reviews/3/evaluate"
+			},
+			"response": []
+		},
+		{
+			"name": "RewardValid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{baseURL}}/api/v1/reviews/2/reward"
+			},
+			"response": []
+		},
+		{
+			"name": "RewardInalid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{baseURL}}/api/v1/reviews/3/reward"
 			},
 			"response": []
 		}
