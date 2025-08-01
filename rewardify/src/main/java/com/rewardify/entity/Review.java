@@ -35,6 +35,10 @@ public class Review {
 
     private boolean verified;
 
+    private boolean valid;
+
+    private boolean informative;
+
     private Double rating;
 
     // Getters and Setters

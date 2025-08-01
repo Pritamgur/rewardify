@@ -34,4 +34,6 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
+
+    private String tags;
 }
