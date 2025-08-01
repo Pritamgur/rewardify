@@ -154,13 +154,52 @@
 			"response": []
 		},
 		{
-			"name": "AddReview Copy",
+			"name": "AddReview Copy 2",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"reviewText\" : \"not good\",\r\n    \"rating\" : 1.0\r\n}",
+					"raw": "{\r\n    \"reviewText\" : \"This product is very heloful for your cat. I have use this medicine for past 2 month my cat is now healthier. It has natural vitamin and can be use as a daily need.\",\r\n    \"rating\" : 4.5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/v1/reviews/submit?customerId=2&productId=2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"reviews",
+						"submit"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "2"
+						},
+						{
+							"key": "productId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddBotReview",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reviewText\" : \"Not at all good at. This is a fake product dont use it daily on your anu\",\r\n    \"rating\" : 1.0\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -193,13 +232,13 @@
 			"response": []
 		},
 		{
-			"name": "AddReview Copy 2",
+			"name": "AddBotReview Copy",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"reviewText\" : \"This product is very heloful for your cat. I have use this product for past 2 month my cat is now healthier\",\r\n    \"rating\" : 4.5\r\n}",
+					"raw": "{\r\n    \"reviewText\" : \"This is a excellent product. Recommend this excellent product. I love this product must buy\",\r\n    \"rating\" : 5.0\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -207,7 +246,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseURL}}/api/v1/reviews/submit?customerId=2&productId=2",
+					"raw": "{{baseURL}}/api/v1/reviews/submit?customerId=1&productId=2",
 					"host": [
 						"{{baseURL}}"
 					],
@@ -220,7 +259,7 @@
 					"query": [
 						{
 							"key": "customerId",
-							"value": "2"
+							"value": "1"
 						},
 						{
 							"key": "productId",
